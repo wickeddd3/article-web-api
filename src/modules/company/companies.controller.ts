@@ -4,7 +4,7 @@ import HttpException from '@/exceptions/http.exception';
 import validationMiddleware from '@/middlewares/validation.middleware';
 import { CompaniesService } from '@/modules/company/companies.service';
 import { authenticateJwt } from '@/middlewares/token.middleware';
-import { companySchema } from '@/modules/company/company.schema';
+import { companySchema, editCompanySchema } from '@/modules/company/company.schema';
 
 export class CompaniesController implements Controller {
   public path = '/companies';
@@ -19,7 +19,7 @@ export class CompaniesController implements Controller {
     this.router.get(`${this.path}`, [authenticateJwt], this.list);
     this.router.post(`${this.path}`, [authenticateJwt, validationMiddleware(companySchema)], this.create);
     this.router.get(`${this.path}/:id`, [authenticateJwt], this.get);
-    this.router.put(`${this.path}/:id`, [authenticateJwt, validationMiddleware(companySchema)], this.update);
+    this.router.put(`${this.path}/:id`, [authenticateJwt, validationMiddleware(editCompanySchema)], this.update);
     this.router.delete(`${this.path}/:id`, [authenticateJwt], this.delete);
   }
 

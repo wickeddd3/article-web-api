@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma';
-import { UserSchemaType } from '@/modules/user/user.schema';
+import { EditUserSchemaType, UserSchemaType } from '@/modules/user/user.schema';
 import { User } from '@prisma/client';
 
 export class UsersRepository {
@@ -49,7 +49,7 @@ export class UsersRepository {
     }
   }
 
-  public async update(id: number, data: UserSchemaType): Promise<User> {
+  public async update(id: number, data: EditUserSchemaType): Promise<User> {
     try {
       const user = await this.db.user.update({
         where: { id },

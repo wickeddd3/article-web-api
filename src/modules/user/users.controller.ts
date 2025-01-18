@@ -4,7 +4,7 @@ import HttpException from '@/exceptions/http.exception';
 import validationMiddleware from '@/middlewares/validation.middleware';
 import { UsersService } from '@/modules/user/users.service';
 import { authenticateJwt } from '@/middlewares/token.middleware';
-import { userSchema } from '@/modules/user/user.schema';
+import { editUserSchema, userSchema } from '@/modules/user/user.schema';
 
 export class UsersController implements Controller {
   public path = '/users';
@@ -19,7 +19,7 @@ export class UsersController implements Controller {
     this.router.get(`${this.path}`, [authenticateJwt], this.list);
     this.router.post(`${this.path}`, [authenticateJwt, validationMiddleware(userSchema)], this.create);
     this.router.get(`${this.path}/:id`, [authenticateJwt], this.get);
-    this.router.put(`${this.path}/:id`, [authenticateJwt, validationMiddleware(userSchema)], this.update);
+    this.router.put(`${this.path}/:id`, [authenticateJwt, validationMiddleware(editUserSchema)], this.update);
     this.router.delete(`${this.path}/:id`, [authenticateJwt], this.delete);
   }
 

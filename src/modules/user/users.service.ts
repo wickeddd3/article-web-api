@@ -1,8 +1,6 @@
 import { hashPassword } from '@/lib/bcrypt';
-import { generateToken } from '@/lib/jwt';
 import { UsersRepository } from '@/modules/user/users.repository';
 import { UserSchemaType } from '@/modules/user/user.schema';
-import { AuthUser } from '@/types/user.type';
 import { excludeFields } from '@/utils/data-transformers';
 import { User } from '@prisma/client';
 
@@ -71,8 +69,32 @@ export class UsersService {
 
   public async update(id: number, data: UserSchemaType): Promise<User | Error> {
     try {
-      const user = await this.usersRepository.update(id, data);
-      return user as User;
+      const { firstname, lastname, type, status, email, password } = data;
+
+      // Check if email already exist
+      const matchedUser = await this.usersRepository.getByEmail(email);
+      if (matchedUser && matchedUser.id !== id) {
+        throw new Error('Email already exist');
+      }
+
+      // If email doesn't exist hash password string and create user
+      const hashedPassword = password ? await hashPassword(password) : password;
+      const userData = {
+        firstname,
+        lastname,
+        type,
+        status,
+        email,
+        ...(password ? { password: hashedPassword } : {}),
+      };
+      const user = await this.usersRepository.update(id, userData);
+
+      // Throw error when user is not created
+      if (!user) {
+        throw new Error('Error occurred while creating user');
+      }
+
+      return excludeFields(user, ['password']) as User;
     } catch (error: any) {
       throw new Error(error.message);
     }

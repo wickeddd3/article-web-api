@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma';
-import { CompanySchemaType } from '@/modules/company/company.schema';
+import { CompanySchemaType, EditCompanySchemaType } from '@/modules/company/company.schema';
 import { Company } from '@prisma/client';
 
 export class CompaniesRepository {
@@ -38,7 +38,7 @@ export class CompaniesRepository {
     }
   }
 
-  public async update(id: number, data: CompanySchemaType): Promise<Company | Error> {
+  public async update(id: number, data: EditCompanySchemaType): Promise<Company | Error> {
     try {
       const company = await this.db.company.update({
         where: { id },

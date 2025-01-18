@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma';
-import { CompanySchemaType } from '@/schemas/company.schema';
+import { CompanySchemaType } from '@/modules/company/company.schema';
 import { Company } from '@prisma/client';
 
 export class CompaniesRepository {

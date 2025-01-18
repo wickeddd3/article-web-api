@@ -4,7 +4,7 @@ import HttpException from '@/exceptions/http.exception';
 import validationMiddleware from '@/middlewares/validation.middleware';
 import { CompaniesService } from '@/modules/company/companies.service';
 import { authenticateJwt } from '@/middlewares/token.middleware';
-import { companySchema } from '@/schemas/company.schema';
+import { companySchema } from '@/modules/company/company.schema';
 
 export class CompaniesController implements Controller {
   public path = '/companies';

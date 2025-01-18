@@ -1,5 +1,5 @@
 import { CompaniesRepository } from '@/modules/company/companies.repository';
-import { CompanySchemaType } from '@/schemas/company.schema';
+import { CompanySchemaType } from '@/modules/company/company.schema';
 import { Company } from '@prisma/client';
 
 export class CompaniesService {

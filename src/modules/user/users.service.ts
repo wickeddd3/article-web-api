@@ -21,7 +21,7 @@ export class UsersService {
   public async get(id: number): Promise<User | Error> {
     try {
       const user = await this.usersRepository.get(id);
-      return user as User;
+      return excludeFields(user, ['password']) as User;
     } catch (error: any) {
       throw new Error(error.message);
     }
@@ -36,7 +36,7 @@ export class UsersService {
     }
   }
 
-  public async create(data: UserSchemaType): Promise<AuthUser | Error> {
+  public async create(data: UserSchemaType): Promise<User | Error> {
     try {
       const { firstname, lastname, type, status, email, password } = data;
 
@@ -63,15 +63,7 @@ export class UsersService {
         throw new Error('Error occurred while creating user');
       }
 
-      // Generate jwt token using user id and email
-      const token = generateToken(user.id, user.email);
-
-      const authUser = {
-        user: excludeFields(user, ['password']),
-        token,
-      };
-
-      return authUser as AuthUser;
+      return excludeFields(user, ['password']) as User;
     } catch (error: any) {
       throw new Error(error.message);
     }

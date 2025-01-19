@@ -4,7 +4,7 @@ import HttpException from '@/exceptions/http.exception';
 import validationMiddleware from '@/middlewares/validation.middleware';
 import { ArticlesService } from '@/modules/article/articles.service';
 import { authenticateJwt } from '@/middlewares/token.middleware';
-import { articleSchema } from '@/modules/article/article.schema';
+import { articleSchema, editArticleSchema } from '@/modules/article/article.schema';
 
 export class ArticlesController implements Controller {
   public path = '/articles';
@@ -19,7 +19,7 @@ export class ArticlesController implements Controller {
     this.router.get(`${this.path}`, [authenticateJwt], this.list);
     this.router.post(`${this.path}`, [authenticateJwt, validationMiddleware(articleSchema)], this.create);
     this.router.get(`${this.path}/:id`, [authenticateJwt], this.get);
-    this.router.put(`${this.path}/:id`, [authenticateJwt, validationMiddleware(articleSchema)], this.update);
+    this.router.put(`${this.path}/:id`, [authenticateJwt, validationMiddleware(editArticleSchema)], this.update);
     this.router.delete(`${this.path}/:id`, [authenticateJwt], this.delete);
   }
 

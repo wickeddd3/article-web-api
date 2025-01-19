@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma';
-import { ArticleSchemaType } from '@/modules/article/article.schema';
+import { ArticleSchemaType, EditArticleSchemaType } from '@/modules/article/article.schema';
 import { Article } from '@prisma/client';
 
 export class ArticlesRepository {
@@ -38,7 +38,7 @@ export class ArticlesRepository {
     }
   }
 
-  public async update(id: number, data: ArticleSchemaType): Promise<Article | Error> {
+  public async update(id: number, data: EditArticleSchemaType): Promise<Article | Error> {
     try {
       const article = await this.db.article.update({
         where: { id },

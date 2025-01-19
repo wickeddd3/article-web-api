@@ -64,7 +64,7 @@ model Article {
   title     String
   link      String
   date      DateTime      @default(now())
-  content   String
+  content   String        @db.Text
   status    ArticleStatus @default(ForEdit)
   writer    User          @relation(name: "WriterArticle", fields: [writerId], references: [id])
   writerId  Int

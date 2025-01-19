@@ -7,7 +7,12 @@ export class ArticlesRepository {
 
   public async list(): Promise<Article[] | Error> {
     try {
-      const articles = await this.db.article.findMany();
+      const articles = await this.db.article.findMany({
+        include: {
+          writer: true,
+          editor: true,
+        },
+      });
       return articles as Article[];
     } catch (error: any) {
       throw new Error(error.message);
